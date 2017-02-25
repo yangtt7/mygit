@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
+    <script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/highcharts.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="js/jquery.daterangepicker.js"></script>
+    <style type="text/css">
+        body {
+            font-family: '微软雅黑';
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul, li {
+            list-style: none;
+        }
+
+        .userpage ul li {
+            float: left;
+            height: 30px;
+            margin-right: 10px;
+            cursor: poiter;
+        }
+
+        .userpage ul li input {
+            border-radius: 3px;
+            height: 30px;
+            background: none;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+        }
+
+        .userpage ul li select {
+            border-radius: 3px;
+            height: 30px;
+            border: 1px solid #ccc;
+        }
+
+        .userpage ul .search {
+            border-radius: 3px;
+            border: none;
+            width: 50px;
+            height: 30px;
+            background-color: #0ae;
+            color: #fff;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .topcon {
+            height: 30px;
+        }
+
+        .listdata {
+            width: 491px;
+            margin: 0 auto;
+        }
+
+        .topli {
+            color: #888;
+        }
+
+        .listdata .toptitle li {
+            margin-right: 10px;
+            border-right: 1px solid #ccc;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .listcon {
+            clear: both;
+        }
+
+        .listdata .toptitle li span {
+            width: 150px;
+            border: 1px solid #ccc;
+            border-right: none;
+            display: inline-block;
+            text-align: center;
+            height: 30px;
+            line-height: 30px;
+            border-bottom: none;
+        }
+
+        #btnChar {
+            float: right;
+        }
+    </style>
+</head>
+<body>
+<div class="userpage">
+    <div class="topcon">
+        <ul>
+            <li>
+              <!--   <select name="" id="select">
+                    <option value="appid">appid</option>
+                </select> -->
+            </li>
+            <li>
+                <input id="date-range1" name="times" type="text" style="width:188px" placeholder="日期"/>
+            </li>
+            <li>
+                <input type="button" value="查询" onclick="search()" class="search"/>
+            </li>
+        </ul>
+    </div>
+    <select name="" id="btnChar"
+            style="float: right;line-height: 30px; height: 30px;cuesor:pointer;border-radius:4px;position: relative;top: 38px;z-index: 3000;border:1px solid #ccc;">
+                <option value="line">折线图</option>
+                <option value="spline">曲线图</option>
+                <option value="areaspline">折线面积图</option>
+                <option value="column">柱状图</option>
+                <option value="bar">条形图</option>
+    </select>
+
+    <div id="container5" style="height: 400px;margin-bottom:50px;"></div>
+    <div class="listdata">
+        <ul class="toptitle">
+            <li class="topli"><span>日期</span><span>新增用户数</span><span>总用户数</span></li>
+        </ul>
+
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var chart, options;
+    var userdata;
+    var all = '';
+    var now = new Date();
+    all += now.getFullYear() + '-';
+    all += now.getMonth() + 1 + '-';
+    all += now.getDate() + '-';
+    var hh = now.getHours();
+    var mm = now.getMinutes();
+    var start, end;
+    var userdata1;
+    var chart1, options;
+    function search() {
+        if ($('#date-range1').val() == '') {
+            alert('请选择时间');
+            return false;
+        } else {
+        //     var sedata = $('#select').val();
+        //     var searlist, searjson;
+        //     if (sedata == 'appid') {
+        //         searlis = {
+        //             'type': 'user',
+        //             'start_time': start,
+        //             'end_time': end
+        //         };
+        //         searjson = JSON.stringify(searlis);
+        //     } else {
+        //         searlis = {
+        //             'type': 'user',
+        //             'appid': sedata,
+        //             'start_time': start,
+        //             'end_time': end
+
+        //         };
+        //         searjson = JSON.stringify(searlis);
+        // }
+            // $.ajax({
+            //     type: 'post',
+            //     url: '数据url',
+            //     dataType: "json",
+            //     data: searjson,
+            //     async: false,
+            //     success: function (data) {
+            //         userdata1 = data.chart;
+            // });
+                userdata1 = {"x":["00:00:00","01:00:00","02:00:00","03:00:00","04:00:00","05:00:00","06:00:00","07:00:00","08:00:00","09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00","20:00:00","21:00:00","22:00:00","23:00:00"],"y":[{"name":"tody","data":[0,0,0,0,0,0,0,0,0,11,19,25,20,15,10,15,20,10,0,0,0,0,0,0]},{"name":"yesterday","data":[1,1,2,0,0,2,3,10,8,10,23,5,10,12,23,10,5,5,12,18,16,14,0,0]}]};
+            Highcharts.setOptions({
+                colors: ['#f9cc01', '#45b7af']
+            });
+            chart1 = new Highcharts.Chart(
+                    options1 = {
+                    chart: {
+                        type: 'spline',
+                        renderTo: 'container5',
+                        animation: Highcharts.svg, // don't animate in old IE
+                        marginRight: 10
+                    },
+                    title: {
+                        text: '历史用户数据对比图',
+                        x: -20 //center
+                    },
+
+                    xAxis: {
+                        type: 'date',
+                        categories: userdata1.x,
+                        labels: {
+                            rotation: -90,   //竖直放
+                            rotation: -45   //45度倾斜
+                        },
+                        tickInterval: 1
+                    },
+                    yAxis: {
+                        title: {
+                            text: '用户数（个）'
+                        },
+                        plotLines: [{
+                            value: 0,
+                            width: 1,
+                            color: '#808080'
+                        }]
+
+                    },
+                    tooltip: {
+                        valueSuffix: '个',
+                        shared: true,
+                        borderColor: '#ccc',
+
+                    },
+                        series: userdata1.y
+                    });
+
+            }
+    }
+    //可以调用后台数据
+    // var userd = {
+    //     type: 'user'
+    // };
+    // var userdjson = JSON.stringify(userd);
+    // $.ajax({
+    //     type: 'post',
+    //     url: '数据url',
+    //     dataType: "json",
+    //     data: userdjson,
+    //     async: false,
+    //     success: function (data) {
+    //         userdata = data.chart;
+    // });
+    Highcharts.setOptions({
+        colors: ['#f9cc01', '#45b7af']
+    });
+
+    userdata = {"x":["00:00:00","01:00:00","02:00:00","03:00:00","04:00:00","05:00:00","06:00:00","07:00:00","08:00:00","09:00:00","10:00:00","11:00:00","12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00","18:00:00","19:00:00","20:00:00","21:00:00","22:00:00","23:00:00"],"y":[{"name":"tody","data":[0,0,0,0,0,0,0,0,0,11,19,25,20,15,10,15,20,10,0,0,0,0,0,0]},{"name":"yesterday","data":[1,1,2,0,0,2,3,10,8,10,23,5,10,12,23,10,5,5,12,18,16,14,0,0]}]};
+    var options;
+    chart = new Highcharts.Chart(
+            options = {
+                chart: {
+                    type: 'spline',
+                    renderTo: 'container5',
+                    animation: Highcharts.svg, // don't animate in old IE
+                    marginRight: 10
+                },
+                title: {
+                    text: '历史用户数据对比图',
+                    x: -20 //center
+                },
+
+                xAxis: {
+                    type: 'date',
+                    categories: userdata.x,
+                    labels: {
+                        rotation: -90,   //竖直放
+                        rotation: -45   //45度倾斜
+                },
+                    tickInterval: 1
+                },
+                yAxis: {
+                title: {
+                    text: '用户数（个）'
+                },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+
+                },
+                tooltip: {
+                    borderColor: '#ccc',
+                    valueSuffix: '个',
+                    shared: true
+
+                },
+                series: userdata.y
+        });
+    var chart;
+    $(function () {
+        $(document).ready(function () {
+            chart = new Highcharts.Chart(options);
+            $("#btnChar").change(function () {
+                var type = $(this).find('option:selected').val();
+                if (options) {
+                    options.chart.type = type;
+                    chart = new Highcharts.Chart(options);
+                } else {
+                    options1.chart.type = type;
+                    chart1 = new Highcharts.Chart(options1);
+                }
+
+
+            });
+            $('#date-range1').dateRangePicker({
+                startDate: "1900-01-01",
+                endDate: all,
+                startOfWeek: 'monday',
+                separator: ' 至 ',
+                format: 'YYYY-MM-DD',
+                autoClose: false,
+                singleDatePicker: true,
+                showDropdowns: true
+            }).bind('datepicker-apply', function (event, obj) {
+                var datestart = new Date(obj.date1);
+                var dateend = new Date(obj.date2);
+                start = datestart.getFullYear() + '-' + (datestart.getMonth() + 1) + '-' + datestart.getDate();
+                end = dateend.getFullYear() + '-' + (dateend.getMonth() + 1) + '-' + dateend.getDate();
+
+            });
+        })
+    })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="css/daterangepicker.css"/>
+    <!--  <script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
+     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts.js"></script>
+     <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/modules/exporting.js"></script> -->
+    <script type="text/javascript" src="js/query-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/highcharts.js"></script>
+    <script type="text/javascript" src="js/moment.min.js"></script>
+    <script type="text/javascript" src="js/jquery.daterangepicker.js"></script>
+
+</head>
+<body>
+选择日期：<input id="date-range1" name="times" type="text" style="width:188px"/><input type="button" value="查询"
+                                                                                  onclick="search()"/>
+
+<div id="reportrange"><span></span></div>
+<div id="container" style="min-width:400px;height:400px"></div>
+</body>
+</html>
+<script type="text/javascript">
+    //柱图
+    /* $(function () {
+        var d;
+        $.ajax({
+            url: 'http://10.99.123.37/trunk/html/Push/index.php/Crontab/PushMsgNumer',
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                d = data;
+            }
+        });
+        console.log(d);
+        $('#container').highcharts({
+            chart: {
+                //type: 'line'
+                //type: 'spline'
+     //type: 'column'
+                type: 'column'
+            },
+            title: {
+                text: '今日-昨日消息总数和消息数对比'
+            },
+            xAxis: {
+                categories: d.x
+            },
+            yAxis: {
+                allowDecimals: false,
+                min: 0,
+                title: {
+                    text: '数量'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.x + '</b><br/>' +
+                            this.series.name + ': ' + this.y + '<br/>' +
+                            'Total: ' + this.point.stackTotal;
+                }
+            },
+            plotOptions: {
+                column: {
+                    stacking: 'normal'
+                }
+            },
+            series: d.y
+        });
+     });*/
+
+    /*$(function () {
+        var d;
+        $.ajax({
+            url: 'http://10.99.123.37/trunk/html/Push/index.php/Crontab/PushMsgNumer',
+            dataType: "json",
+            async: false,
+            success: function (data) {
+                d = data;
+            }
+        });
+        console.log(d);
+            $('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
+                title: {
+     text: '今日-昨日消息总数和消息数对比',
+                    x: -20 //center
+                },
+                subtitle: {
+                    text: 'Source: WorldClimate.com',
+                    x: -20
+                },
+                xAxis: {
+                    categories: d.x
+                },
+                yAxis: {
+                    title: {
+                        text: '数量（条）'
+                    },
+                    plotLines: [{
+                        value: 0,
+                        width: 1,
+                        color: '#808080'
+                    }]
+                },
+                tooltip: {
+                    valueSuffix: '条'
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'middle',
+                    borderWidth: 0
+                },
+                series: d.y
+            });
+
+     });*/
+
+    $(function () {
+        /**
+         * In order to synchronize tooltips and crosshairs, override the
+         * built-in events with handlers defined on the parent element.
+         */
+        /*$('#container').bind('mousemove touchmove touchstart', function (e) {
+            var chart,
+                    point,
+                    i,
+                    event;
+            for (i = 0; i < Highcharts.charts.length; i = i + 1) {
+                chart = Highcharts.charts[i];
+                event = chart.pointer.normalize(e.originalEvent); // Find coordinates within the chart
+                point = chart.series[0].searchPoint(event, true); // Get the hovered point
+         //console.log(chart.series);
+                if (point) {
+                    point.highlight(e);
+                }
+
+            }
+         });*/
+        /**
+         * Override the reset function, we don't need to hide the tooltips and crosshairs.
+         */
+        Highcharts.Pointer.prototype.reset = function () {
+            return undefined;
+        };
+        /**
+         * Highlight a point by showing tooltip, setting hover state and draw crosshair
+         */
+        Highcharts.Point.prototype.highlight = function (event) {
+            this.onMouseOver(); // 该标记显示悬停
+            this.series.chart.tooltip.refresh(this); // 显示工具提示
+            this.series.chart.xAxis[0].drawCrosshair(event, this); // 显示十字线
+        };
+        /*
+         * Synchronize zooming through the setExtremes event handler.
+         */
+        function syncExtremes(e) {
+            var thisChart = this.chart;
+            if (e.trigger !== 'syncExtremes') { // Prevent feedback loop
+                Highcharts.each(Highcharts.charts, function (chart) {
+                    if (chart !== thisChart) {
+                        if (chart.xAxis[0].setExtremes) { // It is null while updating
+                            chart.xAxis[0].setExtremes(e.min, e.max, undefined, false, {trigger: 'syncExtremes'});
+                        }
+                    }
+                });
+            }
+        }
+
+        // Get the data. The contents of the data file can be viewed at
+        // https://github.com/highcharts/highcharts/blob/master/samples/data/activity.json
+        //数据
+//         {
+//     "xData":[
+//         "0:00-1:00",
+//         "1:00-2:00",
+//         "2:00-3:00",
+//         "3:00-4:00",
+//         "4:00-5:00",
+//         "5:00-6:00",
+//         "6:00-7:00",
+//         "7:00-8:00",
+//         "8:00-9:00",
+//         "9:00-10:00",
+//         "10:00-11:00",
+//         "11:00-12:00",
+//         "12:00-13:00",
+//         "13:00-14:00",
+//         "14:00-15:00",
+//         "15:00-16:00",
+//         "16:00-17:00",
+//         "17:00-18:00",
+//         "18:00-19:00",
+//         "19:00-20:00",
+//         "20:00-21:00",
+//         "21:00-22:00",
+//         "22:00-23:00",
+//         "23:00-24:00"
+//     ],
+//     "datasets":[
+//         {
+//             "data":[
+//                 [
+//                     13,
+//                     16,
+//                     10,
+//                     18,
+//                     26,
+//                     39,
+//                     56,
+//                     64,
+//                     79,
+//                     86,
+//                     119,
+//                     138,
+//                     111,
+//                     153,
+//                     26
+//                 ],
+//                 [
+//                     18,
+//                     20,
+//                     16,
+//                     17,
+//                     12,
+//                     52,
+//                     52,
+//                     102,
+//                     124,
+//                     150,
+//                     148,
+//                     230,
+//                     250,
+//                     258,
+//                     322,
+//                     236,
+//                     191,
+//                     128,
+//                     150,
+//                     97,
+//                     55,
+//                     49,
+//                     26,
+//                     31
+//                 ]
+//             ],
+//             "color":[
+//                 "#66ff00",
+//                 "#D6D6D6"
+//             ],
+//             "name":[
+//                 "今日消息数",
+//                 "昨日消息数"
+//             ],
+//             "unit":"条",
+//             "type":"spline",
+//             "valueDecimals":1
+//         },
+//         {
+//             "name":[
+//                 "今日失败消息数",
+//                 "昨日失败消息数"
+//             ],
+//             "color":[
+//                 "#ff9933",
+//                 "#C1CDC1"
+//             ],
+//             "data":[
+//                 [
+//                     1,
+//                     0,
+//                     0,
+//                     0,
+//                     2,
+//                     0,
+//                     1,
+//                     1,
+//                     2,
+//                     1,
+//                     5,
+//                     3,
+//                     0,
+//                     0,
+//                     0
+//                 ],
+//                 [
+//                     0,
+//                     2,
+//                     0,
+//                     0,
+//                     0,
+//                     4,
+//                     6,
+//                     2,
+//                     10,
+//                     6,
+//                     2,
+//                     10,
+//                     12,
+//                     2,
+//                     0,
+//                     0,
+//                     6,
+//                     0,
+//                     0,
+//                     8,
+//                     2,
+//                     0,
+//                     0,
+//                     0
+//                 ]
+//             ],
+//             "unit":"条",
+//             "type":"spline",
+//             "valueDecimals":1
+//         },
+//         {
+//             "color":[
+//                 "#3366cc",
+//                 "#CCCCCC"
+//             ],
+//             "name":[
+//                 "今日失败消息数",
+//                 "昨日失败消息数"
+//             ],
+//             "data":[
+//                 [
+//                     12,
+//                     16,
+//                     10,
+//                     18,
+//                     24,
+//                     39,
+//                     55,
+//                     63,
+//                     77,
+//                     85,
+//                     114,
+//                     135,
+//                     111,
+//                     153,
+//                     26
+//                 ],
+//                 [
+//                     18,
+//                     18,
+//                     16,
+//                     17,
+//                     12,
+//                     48,
+//                     46,
+//                     100,
+//                     114,
+//                     144,
+//                     146,
+//                     220,
+//                     238,
+//                     256,
+//                     322,
+//                     236,
+//                     185,
+//                     128,
+//                     150,
+//                     89,
+//                     53,
+//                     49,
+//                     26,
+//                     31
+//                 ]
+//             ],
+//             "unit":"条",
+//             "type":"spline",
+//             "valueDecimals":1
+//         }
+//     ]
+// }
+        $.getJSON('http://10.99.123.37/trunk/html/Push/index.php/Crontab/PushMsgNumer1', function (activity) {
+            console.log(activity);
+            $.each(activity.datasets, function (i, dataset) {
+                // Add X values
+                dataset.data1 = Highcharts.map(dataset.data[0], function (val, j) {
+                    return [activity.xData[j], val];
+                });
+                dataset.data2 = Highcharts.map(dataset.data[1], function (val, j) {
+                    return [activity.xData[j], val];
+                });
+             //   console.log(dataset.data);
+                $('<div class="chart">')
+                        .appendTo('#container')
+                        .highcharts({
+                            chart: {
+                                marginLeft: 40, // Keep all charts left aligned
+                                spacingTop: 20,
+                                spacingBottom: 20
+                            },
+                            title: {
+                                text: dataset.name,
+                                align: 'left',
+                                margin: 0,
+                                x: 30
+                            },
+                            credits: {
+                                enabled: false
+                            },
+                            xAxis: {
+                                categories: activity.xData
+                            },
+                            yAxis: {
+                                title: {
+                                    text: null
+                                }
+                            },
+                            tooltip: {
+                                crosshairs: {
+                                    width: 2,
+                                    color: 'gray'
+
+                                },
+                                shared: true,
+                                valueDecimals: 0
+                            },
+                            legend: {
+                                enabled: false,
+                                layout: 'vertical',
+                                //align: 'right',
+                                //verticalAlign: 'middle',
+                                borderWidth: 0
+                            },
+                            series: [{
+                                data: dataset.data1,
+                                name: dataset.name[0],
+                                type: dataset.type,
+                                color: dataset.color[0],
+                                fillOpacity: 0.3,
+                                tooltip: {
+                                    valueSuffix: ' ' + dataset.unit
+                                }
+                            }, {
+                                data: dataset.data2,
+                                name: dataset.name[1],
+                                type: dataset.type,
+                                color: dataset.color[1],
+                                fillOpacity: 0.3,
+                                tooltip: {
+                                    valueSuffix: ' ' + dataset.unit
+                                }
+                            }]
+                        });
+            });
+        });
+
+    });
+
+
+
+
+</script>

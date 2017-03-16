@@ -1,0 +1,281 @@
+/* 
+* @Author: Marte
+* @Date:   2016-03-28 11:19:43
+* @Last Modified by:   Marte
+* @Last Modified time: 2016-05-17 15:39:26
+*/
+
+
+
+//58 或者 198
+// var which_type = 1;
+// var appid="8gHxV309MLSi";
+// var uid,sid,openid;
+// //点击类型
+// function service_type(obj,num){
+//     if(num == 1){
+//         which_type = 1;
+//         $(obj).addClass('current').siblings().removeClass('current');
+//     }else if(num == 2){
+//         which_type = 2;
+//         $(obj).addClass('current').siblings().removeClass('current');
+//     }else{
+//         which_type = 1;
+//         $(obj).addClass('current').siblings().removeClass('current');
+//     }
+// }
+
+    
+//点击立即购买
+// function wx_now_buy(){
+//     //alert(2);
+//     var goodsNum=1;
+//     var productId='';
+//     var body='';
+//     var totalFee='';
+//     if(which_type==1){
+//       body="远程专家单次版（官网通用）";
+//       totalFee=5800;
+//       productId=1;
+//     }else if(which_type==2){
+//       body="远程专家30次版（官网通用）";
+//       totalFee=19800;
+//       productId=2;
+//     }
+
+//     var orderData = createOrder(appid, uid ,escape(body), totalFee,goodsNum, productId,openid);
+//     if(orderData.code==200){
+//          var payurl=orderData.defaultpayurl;
+//          window.open(payurl);
+//          return true;
+//     }else{
+//          //alert(orderData.code);
+//          return false;
+//     }
+    
+// }
+
+var width = document.documentElement.clientWidth;
+$(document).ready(function(){
+	//var a = $_jsGET['code'];
+	//alert(a.length);
+  //var wx_code=$_jsGET['code'];
+  // var request =  {
+  //     "code": $_jsGET['code']
+  //  };
+// var jsonStr = JSON.stringify( request );//这里可能出现兼容性问题
+//   // var url = "http://newsletter.lcf5.lenovo.com/Sws_wx/oAuthClass.php";
+//    $.ajax({
+//       type: "post",
+//       dataType: "json",
+//       contentType:"application/json;charset=uft-8",
+//       url: url,
+//       data: jsonStr,
+//       success: function (d) {
+//          //alert(d);
+//       },
+//       error:function(e){
+//          //alert(e) ;
+//       }
+//    });
+
+if (window.devicePixelRatio == 1.5) {
+//alert("This is a high-density screen");
+} else if (window.devicePixelRatio == 0.75) {
+//alert("This is a low-density screen");
+}
+  document.body.addEventListener('touchmove', function(event) { 
+    event.preventDefault(); 
+  }, false);
+  //newFastClick(document.body);
+  //页面初始化，给动的元素加addClass()
+  ///////注意媒体查询中的left值会对初始位置有影响，需注释
+  $('header .logo').addClass('logo-ani');
+  $('.rz').addClass('rz-ani');
+  $('.lt').addClass('lt-ani');
+  $('.ting_pic').addClass('ting_pic-ani');
+  $('.jj').addClass('jj-ani');
+  $('.fy').addClass('fy-ani');
+  $('.dh').addClass('dh-ani'); 
+  setTimeout(function(){
+  $('.shang,.center,.xia').fadeIn('fast');
+}, 1500);
+  $('.shang').addClass('shang-ani');
+  $('.center').addClass('center-ani');
+  $('.xia').addClass('xia-ani');
+  $('.buy_b').addClass('buy_b-ani');
+  $('.arrow').addClass('arrow-ani');
+  
+  var nowpage = 1; //当前页
+  $('.bigbox').swipe({
+    swipe:function(event,direction,distance,duration,fingerCount){
+      if (direction == 'up') {
+        nowpage++;
+      }
+      if (direction == 'down') {
+        nowpage--;
+      }
+      if (nowpage >= 4) { //到达最后一页
+        nowpage = 4;
+      }
+      if (nowpage <= 1) { //到达第一页
+        nowpage = 1;
+      }
+      if (nowpage == 1) { //在第一页的时候动画重置
+        setTimeout(function(){ //页面移动过程需要500ms
+          $('.rz').addClass('rz-ani');
+          $('.lt').addClass('lt-ani');
+          $('.dh').addClass('dh-ani');
+          $('.ting_pic').addClass('ting_pic-ani');
+          $('.jj').addClass('jj-ani');
+          $('.fy').addClass('fy-ani'); 
+          setTimeout(function(){
+          $('.shang,.center,.xia').fadeIn('fast');
+        }, 1500);
+          $('.shang').addClass('shang-ani');
+          $('.center').addClass('center-ani');
+          $('.xia').addClass('xia-ani');
+          $('.buy_b').addClass('buy_b-ani');
+          $('.arrow').addClass('arrow-ani');      
+                }, 500);
+      } else { //当前页不是第1页
+        setTimeout(function(){       
+          $('.rz').removeClass('rz-ani');
+          $('.lt').removeClass('lt-ani');
+          $('.dh').removeClass('dh-ani');
+          $('.ting_pic').removeClass('ting_pic-ani');
+          $('.jj').removeClass('jj-ani');
+          $('.fy').removeClass('fy-ani');
+           setTimeout(function(){
+          $('.shang,.center,.xia').fadeOut('fast');
+        }, 1500);
+          $('.shang').removeClass('shang-ani');
+          $('.center').removeClass('center-ani');
+          $('.xia').removeClass('xia-ani');
+          $('.buy_b').removeClass('buy_b-ani');
+          $('.arrow').removeClass('arrow-ani');          
+        }, 500);
+      }
+      if (nowpage == 2) { //在第二页的时候动画重置
+         setTimeout(function(){
+         $('.first').addClass('first-ani');
+         $('.time').addClass('time-ani');
+         $('.quick').addClass('quick-ani');
+         $('.tin').addClass('tin-ani');
+         $('.lx').addClass('lx-ani');
+         $('.dw').addClass('dw-ani');
+         $('.x').addClass('x-ani');
+         $('.dd').addClass('dd-ani');
+         $('.map_con ul li:nth-child(1)').addClass('yc-ani');
+         $('.star').addClass('star-ani');
+         $('.map_con').addClass('map_con-ani');
+         $('.arrow_2').addClass('arrow_2-ani');
+         }, 500);
+      } else {
+        setTimeout(function(){
+        $('.first').removeClass('first-ani');
+        $('.time').removeClass('time-ani');
+        $('.quick').removeClass('quick-ani');
+        $('.tin').removeClass('tin-ani');
+        $('.lx').removeClass('lx-ani');
+        $('.dw').removeClass('dw-ani');
+        $('.x').removeClass('x-ani');
+        $('.dd').removeClass('dd-ani');
+        $('.map_con ul li:nth-child(1)').removeClass('yc-ani');
+        $('.star').removeClass('star-ani');
+        $('.map_con').removeClass('map_con-ani');
+        $('.arrow_2').removeClass('arrow_2-ani');
+        }, 500);
+      };
+      if (nowpage == 3) { //在第三页的时候动画重置
+         setTimeout(function(){
+         $('.confident').addClass('confident-ani');
+         $('.yz').addClass('yz-ani');
+         $('.num_one').addClass('num_one-ani');
+         $('.tin_1').addClass('tin_1-ani');
+         $('.pc').addClass('pc-ani');
+         $('.one').addClass('num-ani');
+         $('.round ul li:nth-child(5)').addClass('one-ani');
+         $('.round ul li:nth-child(4)').addClass('two-ani');
+         $('.round ul li:nth-child(1)').addClass('three-ani');
+         $('.round ul li:nth-child(2)').addClass('four-ani');
+         $('.round ul li:nth-child(3)').addClass('five-ani');
+         $('.round').addClass('round-ani');
+         $('.arrow_3').addClass('arrow_3-ani');
+         }, 500); 
+      } else {
+         setTimeout(function(){
+         $('.confident').removeClass('confident-ani');
+         $('.yz').removeClass('yz-ani');
+         $('.num_one').removeClass('num_one-ani');
+         $('.tin_1').removeClass('tin_1-ani');
+         $('.pc').removeClass('pc-ani');
+         $('.one').removeClass('num-ani');
+         $('.round ul li:nth-child(5)').removeClass('one-ani');
+         $('.round ul li:nth-child(4)').removeClass('two-ani');
+         $('.round ul li:nth-child(1)').removeClass('three-ani');
+         $('.round ul li:nth-child(2)').removeClass('four-ani');
+         $('.round ul li:nth-child(3)').removeClass('five-ani');
+         $('.round').removeClass('round-ani');
+         $('.arrow_3').removeClass('arrow_3-ani');
+         
+;
+         }, 500); 
+      }
+      if (nowpage == 4) { //在第四页的时候动画重置
+         setTimeout(function(){
+         $('.sd').addClass('sd-ani');
+         $('.jx').addClass('jx-ani');
+         $('.tin_2').addClass('tin_2-ani');
+         $('.yd').addClass('yd-ani');
+         $('.wn').addClass('wn-ani');
+         $('.show').addClass('show-ani');
+          setTimeout(function(){
+          $('.zw').fadeIn('fast');
+        }, 800);
+         $('.zw').addClass('zw-ani');
+         $('.buy_4').addClass('buy_4-ani');
+       
+         $('.buy_win').hide();
+         }, 500); 
+      } else {
+         setTimeout(function(){
+         $('.sd').removeClass('sd-ani');
+         $('.jx').removeClass('jx-ani');
+         $('.tin_2').removeClass('tin_2-ani');
+         $('.yd').removeClass('yd-ani');
+         $('.wn').removeClass('wn-ani');
+         $('.show').removeClass('show-ani');
+          setTimeout(function(){
+          $('.zw').fadeOut('fast');
+        }, 800);
+         $('.zw').removeClass('zw-ani');
+         $('.buy_4').removeClass('buy_4-ani');
+         $('.buy_win').hide();
+         }, 500); 
+      }
+
+      //console.log('nowpage', nowpage);
+      $(".bigbox").animate({"top": (nowpage-1) * -100 + "%"}, 500);
+    }
+  });
+ $('.buy_b,.buy_4').click(function(){
+    $('.buy_b,.buy_4').css({'background-image':'url(images/buy_m.png)'});
+     $('.buy_win').show();
+ }) 
+  $('.close_btn').on('touchstart',function(e){//
+    $('.buy_b,.buy_4').css('background-image','url(images/buy_m_h.png)');
+    $('.buy_m').css('background-image','url(images/buy_b.png)');
+    $('.buy_win').hide()
+    e.preventDefault();//
+  });
+
+
+  $('.buy_m').on('touchstart',function(e){//
+    $('.buy_m').css('background-image','url(images/buy_b_h.png)');
+    e.preventDefault();//
+  });
+});
+
+
+

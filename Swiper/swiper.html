@@ -1,0 +1,251 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+	<title>swiper</title>
+    <link rel="stylesheet" type="text/css" href="css/swiper.css">
+    <style type="text/css">
+    *{margin:0;padding:0;}
+    .body{width: 100%;height:100%;}
+    .swiper-container{width: 100%;height:100%;}
+    .swiper-slide{width: 100%;height:100%;}
+    .one{background: red;}
+    .two{background: blue;}
+    .three{background: yellow;}
+    </style>
+</head>
+<body>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide one">Slide 1</div>
+        <div class="swiper-slide two">Slide 2</div>
+        <div class="swiper-slide three">Slide 3</div>
+    </div>
+
+    <div class="swiper-pagination"></div>
+    
+    
+
+</div>
+
+	
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="js/swiper.min.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	var myswiper = new Swiper('.swiper-container',{
+		direction:'vertical',
+	
+		 // 如果需要分页器
+        pagination: '.swiper-pagination'
+     
+	})
+</script> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Swiper demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="css/swiper.css">
+   <link rel="stylesheet" type="text/css" href="css/animate.min.css">
+   
+    <style>
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
+
+     
+       /* display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;*/
+    }
+    .swiper-wrapper div:nth-child(1){position: relative;
+	/*设置背景图*/
+	background: url(images/onebg.png) no-repeat;
+	background-size: 100% 100%;}
+   /*第一屏*/
+
+.one .onetitle{
+	width: 100%;
+
+}
+.one .onebot1{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+
+}
+.one .onebot2{
+	position: absolute;
+	width: 100%;
+	bottom: 0;
+	left: 0;
+	
+}
+.one .qiaokeli{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+
+}
+.one .onepeople{
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 70%;
+	transform: translateX(-50%);
+
+}
+.one .gift{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	
+}
+.one .sweet{
+	position: absolute;
+	left: 3%;
+	top: 45%;
+	width: 25%;
+
+
+}
+.one .xin{
+	position: absolute;
+	left: 26%;
+	top: 30%;
+	width: 50%;
+	
+}
+
+
+ .swiper-wrapper div:nth-child(2){background: url(images/twobg.png) no-repeat;
+	background-size: cover cover;
+	position: relative;}
+   
+.two .top{
+	width: 100%;
+
+}
+.two .title{
+	position: absolute;
+	top: 8%;
+	left: 5%;
+	width: 60%;
+
+}
+.two .bangbangtang{
+	position: absolute;
+	top: 6%;
+	right: 4%;
+	width: 30%;
+
+}
+.two .twopeople{
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 80%;
+
+}
+.two .bingqilin{
+	position: absolute;
+	bottom: 10%;
+	right: 3%;
+	width: 20%;
+
+}
+.two .qkl{
+	position: absolute;
+	left: 3%;
+	top: 30%;
+	width: 5%;
+}
+    .swiper-wrapper div:nth-child(3){background: orange;}
+    .swiper-wrapper div:nth-child(4){background: yellow;}
+    </style>
+</head>
+<body>
+
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide one">
+           		<img src="images/onetitle.png"  class="onetitle ani" swiper-animate-effect="bounceInDown" swiper-animate-duration="0.5s"/>
+				<img src="images/onebot1.png" class="onebot1 ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.3s" />
+				<img src="images/onebot2.png" class="onebot2 ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="0.6s"/>
+				<img src="images/qiaokeli.png" alt="" class="qiaokeli ani" swiper-animate-effect="fadeInUp" swiper-animate-duration="0.5s" swiper-animate-delay="1s"/>
+				<img src="images/onepeople.png" alt="" class="onepeople ani" swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1.3s"/>
+				<img src="images/onexin.png" alt="" class="gift ani" swiper-animate-effect="zoomIn" swiper-animate-duration="0.5s" swiper-animate-delay="1.6s"/>
+				<img src="images/sweet.png" class="sweet ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="0.5s" swiper-animate-delay="2s"/>
+				<img src="images/xin.png" alt="" class="xin ani" swiper-animate-effect="zoomInLeft" swiper-animate-duration="0.5s" swiper-animate-delay="2.3s"/>
+            </div>
+            <div class="swiper-slide two">
+            	<img src="images/twotop.png" class="top ani" swiper-animate-effect="fadeInDown" swiper-animate-duration="0.5s" swiper-animate-delay="0.8s"/>
+				<img src="images/twotitle.png" class="title ani" swiper-animate-effect="fadeInLeft" swiper-animate-duration="0.5s" swiper-animate-delay="0.6s"/>
+				<img src="images/bangbangtang.png" class="bangbangtang ani " swiper-animate-effect="fadeInRight" swiper-animate-duration="0.5s" swiper-animate-delay="0.8s"/>
+				<img src="images/twopeople.png" class="twopeople ani " swiper-animate-effect="fadeIn" swiper-animate-duration="0.5s" swiper-animate-delay="1.1s"/>
+				<img src="images/bingqilin.png" class="bingqilin ani " swiper-animate-effect="fadeInUpBig" swiper-animate-duration="0.5s" swiper-animate-delay="1.6s"/>
+				<img src="images/twoqkl.png" class="qkl" />
+				<img src="images/twoqkl.png" class="qkl" style="left: 85%;top:70%" />
+            </div>
+          <!--   <div class="swiper-slide">Slide 3</div>
+            <div class="swiper-slide">Slide 4</div> -->
+
+        </div>
+        
+        <div class="swiper-pagination"></div>
+    </div>
+
+ 
+    <script src="js/swiper.min.js"></script>
+    <script type="text/javascript" src="js/swiper.animate1.0.2.min.js"></script>
+  
+    <script>
+    var swiper = new Swiper('.swiper-container', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true,
+        direction: 'vertical',
+        onInit:function(swiper){
+        	swiperAnimateCache(swiper);
+        	swiperAnimate(swiper);
+        },
+        onSlideChangeEnd:function(swiper){
+        	swiperAnimate(swiper);
+        }
+    });
+    </script>
+</body>
+</html>
